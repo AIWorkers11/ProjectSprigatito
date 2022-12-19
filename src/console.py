@@ -52,8 +52,6 @@ class console:
         #th1.start()
 
     def moveup(self):
-        self.Sprigatito.setModelPosY(self.Sprigatito.getModelPosY()-10)
-        print(self.Sprigatito.getModelPosY())
         for i in range(10):
             self.canvas.move(self.imgid,0,-5)
             self.canvas.update()
