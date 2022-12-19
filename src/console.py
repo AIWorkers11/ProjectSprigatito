@@ -24,7 +24,7 @@ class console:
         self.frame2 = tk.Frame(self.base,relief=tk.RAISED,bd=1,padx=10,pady=10)
         self.canvas = tk.Canvas(self.frame2,bg="#000",width=850,height=500)
         
-        self.Sprigatitoimage = ImageTk.PhotoImage(file="img\Sprigatito.png")
+        self.Sprigatitoimage = ImageTk.PhotoImage(file=".\img\Sprigatito.png")
         self.Sprigatito = Sprigatito()
         
         self.Sprigatito.setModelPosX(425) #初期値：425（中央）

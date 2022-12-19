@@ -1,4 +1,5 @@
 from console import console
 
-main = console()
-main.base.mainloop()
+if __name__ == "__main__":
+    main = console()
+    main.base.mainloop()
