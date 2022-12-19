@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk
 import threading 
 import string
+import time
 from sprigatito import Sprigatito
 
 class console:
@@ -47,10 +48,16 @@ class console:
         self.inputbox.pack(fill=tk.BOTH)
         self.frame2.pack(side=tk.BOTTOM,fill=tk.BOTH)
 
+        #th1 = threading.Thread(target=self.moveup)
+        #th1.start()
+
     def moveup(self):
         self.Sprigatito.setModelPosY(self.Sprigatito.getModelPosY()-10)
         print(self.Sprigatito.getModelPosY())
-        self.canvas.move(self.imgid,0,-10)
+        for i in range(10):
+            self.canvas.move(self.imgid,0,-5)
+            self.canvas.update()
+            time.sleep(0.03)
 
 
     def push(self):
@@ -61,5 +68,3 @@ class console:
             self.outputbox.configure(state="normal")
             self.outputbox.insert("end",text+"\n")
             self.outputbox.configure(state="disabled")
-
-        
