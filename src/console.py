@@ -1,5 +1,5 @@
 import tkinter as tk
-from PIL import ImageTk
+from PIL import ImageTk,Image,ImageOps
 import threading 
 import string
 import time
@@ -13,18 +13,25 @@ class console:
         self.base.title("ProjectSprigatito - v0.1 Console")
         
         self.frame1 = tk.Frame(self.base,relief=tk.RAISED,bd=1,padx=10,pady=10)
+        
         self.exitbutton = tk.Button(self.frame1,width=10,height=5,text="終了",command=lambda:self.base.destroy())
         self.exitbutton.pack()
         self.movebutton = tk.Button(self.frame1,width=10,height=5,text="上に移動\n（デモ）",command=lambda:self.moveup())
         self.movebutton.pack()
+        self.movedbutton = tk.Button(self.frame1,width=10,height=5,text="下に移動\n（デモ）",command=lambda:self.movedown())
+        self.movedbutton.pack()
+        self.reversebutton = tk.Button(self.frame1,width=10,height=5,text="反転\n（デモ）",command=lambda:self.reverse())
+        self.reversebutton.pack()
         self.pushbutton = tk.Button(self.frame1,width=10,height=5,text="送信",command=lambda:self.push())
         self.pushbutton.pack(side=tk.BOTTOM)
+        
         self.frame1.pack(side=tk.LEFT,fill=tk.BOTH)
 
         self.frame2 = tk.Frame(self.base,relief=tk.RAISED,bd=1,padx=10,pady=10)
         self.canvas = tk.Canvas(self.frame2,bg="#000",width=850,height=500)
         
-        self.Sprigatitoimage = ImageTk.PhotoImage(file=".\img\Sprigatito.png")
+        self.Sprigatitoimage = Image.open("./img/Sprigatito.png")
+        self.Sprigatitoimg = ImageTk.PhotoImage(self.Sprigatitoimage)
         self.Sprigatito = Sprigatito()
         
         self.Sprigatito.setModelPosX(425) #初期値：425（中央）
@@ -33,7 +40,7 @@ class console:
         self.imgid = self.canvas.create_image(
             self.Sprigatito.getModelPosX(),
             self.Sprigatito.getModelPosY(),
-            image=self.Sprigatitoimage
+            image=self.Sprigatitoimg
         )        
         self.outlabel = tk.Label(self.frame2,text="出力")
         self.outputbox = tk.Text(self.frame2,width=10,height=7)
@@ -56,8 +63,20 @@ class console:
             self.canvas.move(self.imgid,0,-5)
             self.canvas.update()
             time.sleep(0.03)
-
-
+    def movedown(self):
+        for i in range(10):
+            self.canvas.move(self.imgid,0,5)
+            self.canvas.update()
+            time.sleep(0.03)
+    def reverse(self):
+            self.canvas.delete(self.imgid)
+            self.Sprigatitoimage = ImageOps.mirror(self.Sprigatitoimage)
+            self.Sprigatitoimg = ImageTk.PhotoImage(self.Sprigatitoimage)
+            self.imgid = self.canvas.create_image(
+                self.Sprigatito.getModelPosX(),
+                self.Sprigatito.getModelPosY(),
+                image=self.Sprigatitoimg
+            )    
     def push(self):
         text = self.inputbox.get("1.0","end")
         if not text.isspace():
