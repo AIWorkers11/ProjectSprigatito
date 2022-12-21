@@ -3,7 +3,9 @@ from PIL import ImageTk,Image,ImageOps
 import threading 
 import string
 import time
+
 from sprigatito import Sprigatito
+from user import user
 
 class console:
     def __init__(self):
@@ -13,7 +15,6 @@ class console:
         self.base.title("ProjectSprigatito - v0.1 Console")
         
         self.frame1 = tk.Frame(self.base,relief=tk.RAISED,bd=1,padx=10,pady=10)
-        
         self.exitbutton = tk.Button(self.frame1,width=10,height=5,text="終了",command=lambda:self.base.destroy())
         self.exitbutton.pack()
         self.movebutton = tk.Button(self.frame1,width=10,height=5,text="上に移動\n（デモ）",command=lambda:self.moveup())
@@ -36,12 +37,12 @@ class console:
         
         self.Sprigatito.setModelPosX(425) #初期値：425（中央）
         self.Sprigatito.setModelPosY(250) #初期値：250（中央）
-
+        self.User = user()
         self.imgid = self.canvas.create_image(
             self.Sprigatito.getModelPosX(),
             self.Sprigatito.getModelPosY(),
             image=self.Sprigatitoimg
-        )        
+        )
         self.outlabel = tk.Label(self.frame2,text="出力")
         self.outputbox = tk.Text(self.frame2,width=10,height=7)
         self.outputbox.configure(state="disabled")
@@ -63,11 +64,13 @@ class console:
             self.canvas.move(self.imgid,0,-5)
             self.canvas.update()
             time.sleep(0.03)
+        self.Sprigatito.setModelPosY(self.Sprigatito.getModelPosY()-50)
     def movedown(self):
         for i in range(10):
             self.canvas.move(self.imgid,0,5)
             self.canvas.update()
             time.sleep(0.03)
+        self.Sprigatito.setModelPosY(self.Sprigatito.getModelPosY()+50)
     def reverse(self):
             self.canvas.delete(self.imgid)
             self.Sprigatitoimage = ImageOps.mirror(self.Sprigatitoimage)
@@ -82,6 +85,8 @@ class console:
         if not text.isspace():
             text = text.replace("\n","")
             self.inputbox.delete("1.0","end")
+            self.insertoutput(self.User.getUserName()+":"+text)
+    def insertoutput(self,text):
             self.outputbox.configure(state="normal")
             self.outputbox.insert("end",text+"\n")
             self.outputbox.configure(state="disabled")
