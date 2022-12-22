@@ -4,8 +4,8 @@ import threading
 import string
 import time
 
-from sprigatito import Sprigatito
-from user import user
+import sprigatito
+import user
 
 class console:
     def __init__(self):
@@ -33,11 +33,11 @@ class console:
         
         self.Sprigatitoimage = Image.open("./img/Sprigatito.png")
         self.Sprigatitoimg = ImageTk.PhotoImage(self.Sprigatitoimage)
-        self.Sprigatito = Sprigatito()
+        self.Sprigatito = sprigatito.Sprigatito()
         
         self.Sprigatito.setModelPosX(425) #初期値：425（中央）
         self.Sprigatito.setModelPosY(250) #初期値：250（中央）
-        self.User = user()
+        self.User = user.user()
         self.imgid = self.canvas.create_image(
             self.Sprigatito.getModelPosX(),
             self.Sprigatito.getModelPosY(),
@@ -80,12 +80,16 @@ class console:
                 self.Sprigatito.getModelPosY(),
                 image=self.Sprigatitoimg
             )    
+
     def push(self):
         text = self.inputbox.get("1.0","end")
         if not text.isspace():
             text = text.replace("\n","")
             self.inputbox.delete("1.0","end")
             self.insertoutput(self.User.getUserName()+":"+text)
+            self.Sprigatito.send(text)
+            self.insertoutput(self.Sprigatito.getModelName()+":"+self.Sprigatito.getSendMessage())
+
     def insertoutput(self,text):
             self.outputbox.configure(state="normal")
             self.outputbox.insert("end",text+"\n")
