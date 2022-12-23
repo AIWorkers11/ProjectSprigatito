@@ -6,12 +6,19 @@ class Sprigatito:
         self.sendmes = ""
 
     def send(self,text):
-        if text == "すき":
+        positive_word = ["好き","スキ","好きだよ"]
+        negative_word = ["嫌い","キライ","嫌い"]
+        hyper_negative_word = ["大嫌い"]
+
+        if text in positive_word:
             self.sendmes = "はにゃ！"
-        elif text == "きらい":
+        elif text in negative_word:
             self.sendmes = "はんにゃ……"
+        elif text in hyper_negative_word: 
+            self.sendmes = "は……"
         else:
             self.sendmes = "はにゃ？"
+        
 
     def getModelName(self):
         return self.modelname
