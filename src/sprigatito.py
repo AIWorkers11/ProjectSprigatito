@@ -6,16 +6,25 @@ class Sprigatito:
         self.sendmes = ""
 
     def send(self,text):
-        positive_word = ["好き","スキ","好きだよ"]
-        negative_word = ["嫌い","キライ","嫌い"]
-        hyper_negative_word = ["大嫌い"]
 
-        if text in positive_word:
+        word = {
+            "好き"      : 5,
+            "すき"      : 5,
+            "大好き"    : 10,
+            "嫌い"      : 1,
+            "きらい"    : 1,
+            "大嫌い"    : 0,
+            "大キライ"  : 0
+        }
+
+        if word[text] == 5:
             self.sendmes = "はにゃ！"
-        elif text in negative_word:
+        elif word[text] == 10:
+            self.sendmes = "はにゃ～♡"
+        elif word[text] == 1: 
             self.sendmes = "はんにゃ……"
-        elif text in hyper_negative_word: 
-            self.sendmes = "は……"
+        elif word[text] == 0:
+            self.sendmes = "……"
         else:
             self.sendmes = "はにゃ？"
         
