@@ -5,6 +5,7 @@ import customtkinter as ctk
 
 import sprigatito
 import user
+import subconsole
 
 class console:
     def __init__(self):
@@ -26,6 +27,8 @@ class console:
         self.movedbutton.pack(padx=10,pady=20)
         self.reversebutton = ctk.CTkButton(master=self.frame1,width=120,height=40,text="反転\n（デモ）",command=lambda:self.reverse())
         self.reversebutton.pack(padx=10,pady=20)
+        self.subconbutton = ctk.CTkButton(master=self.frame1,width=120,height=40,text="サブ画面",command=lambda:self.newconsole())
+        self.subconbutton.pack(padx=10,pady=20)
         self.pushbutton = ctk.CTkButton(master=self.frame1,width=120,height=40,text="送信",command=lambda:self.push())
         self.pushbutton.pack(padx=10,pady=20,side=tk.BOTTOM)
         
@@ -96,6 +99,10 @@ class console:
             self.insertoutput(self.Sprigatito.getModelName()+":"+self.Sprigatito.getSendMessage())
 
     def insertoutput(self,text):
-            self.outputbox.configure(state="normal")
-            self.outputbox.insert("end",text+"\n")
-            self.outputbox.configure(state="disabled")
+        self.outputbox.configure(state="normal")
+        self.outputbox.insert("end",text+"\n")
+        self.outputbox.configure(state="disabled")
+
+    def newconsole(self):
+        self.subconsole = subconsole.Subconsole()
+        self.subconsole.base.mainloop()
