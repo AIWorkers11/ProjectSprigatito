@@ -17,13 +17,13 @@ class Sprigatito:
             "大キライ"  : 0
         }
 
-        if word[text] == 5:
+        if word.get(text) == 5:
             self.sendmes = "はにゃ！"
-        elif word[text] == 10:
+        elif word.get(text) == 10:
             self.sendmes = "はにゃ～♡"
-        elif word[text] == 1: 
+        elif word.get(text) == 1: 
             self.sendmes = "はんにゃ……"
-        elif word[text] == 0:
+        elif word.get(text) == 0:
             self.sendmes = "……"
         else:
             self.sendmes = "はにゃ？"
