@@ -9,13 +9,14 @@ import subconsole
 
 class console:
     def __init__(self):
-        self.size = "850x900"
+        self.size = "850x900+0+0"
         self.base = ctk.CTk()
         self.base.geometry(self.size)
         self.base.title("ProjectSprigatito - v0.1 Console")
         self.base.resizable(width=False,height=False)
         ctk.set_default_color_theme("green")
-        
+        self.subconsole = subconsole.Subconsole()
+
         self.frame1 = ctk.CTkFrame(
             master=self.base,
         )
@@ -47,12 +48,15 @@ class console:
         
         self.Sprigatito.setModelPosX(425) #初期値：425（中央）
         self.Sprigatito.setModelPosY(250) #初期値：250（中央）
+
         self.User = user.user()
+        
         self.imgid = self.canvas.create_image(
             self.Sprigatito.getModelPosX(),
             self.Sprigatito.getModelPosY(),
             image=self.Sprigatitoimg
         )
+        
         self.outlabel = ctk.CTkLabel(self.frame2,text="出力")
         self.outputbox = ctk.CTkTextbox(self.frame2,width=600,height=200)
         self.outputbox.configure(state="disabled")
@@ -104,5 +108,8 @@ class console:
         self.outputbox.configure(state="disabled")
 
     def newconsole(self):
-        self.subconsole = subconsole.Subconsole()
-        self.subconsole.base.mainloop()
+
+        if  self.subconsole.subconsole_trigger == False:
+            self.subconsole.subconsole_trigger = True
+            self.subconsole.init()
+            self.subconsole.base.mainloop()
